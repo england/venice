@@ -38,7 +38,10 @@ module Venice
     # For auto-renewable subscriptions, returns the date the subscription will expire
     attr_reader :expires_at
 
+    attr_reader :attributes
+
     def initialize(attributes = {})
+      @attributes = attributes
       @quantity = Integer(attributes['quantity']) if attributes['quantity']
       @product_id = attributes['product_id']
       @transaction_id = attributes['transaction_id']
