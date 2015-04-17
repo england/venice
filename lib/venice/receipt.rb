@@ -86,12 +86,8 @@ module Venice
       self.to_h.to_json
     end
 
-    def production?
-      env == :production
-    end
-
-    def development?
-      ! production?
+    def test?
+      env == :development
     end
 
     class << self
