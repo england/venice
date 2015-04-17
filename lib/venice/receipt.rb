@@ -35,6 +35,8 @@ module Venice
     # For an expired auto-renewable subscription, this contains the receipt details for the latest expired receipt
     attr_accessor :latest_expired
 
+    attr_accessor :env
+
     # For auto-renewable subscriptions, returns the date the subscription will expire
     attr_reader :expires_at
 
@@ -82,6 +84,14 @@ module Venice
 
     def to_json
       self.to_h.to_json
+    end
+
+    def production?
+      env == :production
+    end
+
+    def development?
+      ! production?
     end
 
     class << self

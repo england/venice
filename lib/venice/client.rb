@@ -28,6 +28,14 @@ module Venice
       @verification_url = ENV['IAP_VERIFICATION_ENDPOINT']
     end
 
+    def env
+      if @verification_url == ITUNES_PRODUCTION_RECEIPT_VERIFICATION_ENDPOINT
+        :production
+      else
+        :development
+      end
+    end
+
     def verify!(data, options = {})
       json = json_response_from_verifying_data(data)
       status, receipt_attributes = json['status'].to_i, json['receipt']
@@ -43,6 +51,7 @@ module Venice
         if latest_expired_receipt_attributes = json['latest_expired_receipt_info']
           receipt.latest_expired = Receipt.new(latest_expired_receipt_attributes)
         end
+        receipt.env = self.env
 
         return receipt
       else
